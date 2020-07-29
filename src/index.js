@@ -3,6 +3,30 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import axios from 'axios'
+
+axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com';
+axios.defaults.headers.common['Authorization'] = 'AUTH TOKEN';
+//the line below is not necessary b/c application/json is the default anyways
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+
+
+axios.interceptors.request.use(request => {
+  console.log(request);
+  //you could also edit the request before you return it--the idea behind interceptors
+  return request;
+}, error => {
+  console.log(error);
+  return Promise.reject(error);
+});
+
+axios.interceptors.response.use(response => {
+  console.log(response);
+  return response;
+}, error => {
+  console.log(error);
+  return Promise.reject(error);
+});
 
 ReactDOM.render(
   <React.StrictMode>
